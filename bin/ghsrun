@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# insta485run
+#
+# Clean, build and start server
+
+
+# Stop on errors, print commands
+set -e
+set -x
+
+# Clean
+rm -rf var/
+
+# Build
+./bin/ghsdb create
+
+# Serve
+export FLASK_DEBUG=True
+export FLASK_APP=githubscore
+export GITHUBSCORE_SETTINGS=config.py
+flask run --host 0.0.0.0 --port 8000
