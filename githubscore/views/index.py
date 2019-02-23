@@ -19,52 +19,62 @@ def show_index():
     db = get_db()
 
     if flask.request.method == 'POST':
-    	# Get results of users submissions
-    	req = flask.request.form.to_dict()
-    	# print('POST - req: ', req)
-    	# print('username: ', req['username'])
-  		# Pass entered username to context dic for HTML
-    	context['username_in'] = req['username']
+        # Get results of users submissions
+        form_in = flask.request.form.to_dict()
+        # print('POST - req: ', req)
+        # print('username: ', type(form_in['username']))
 
-    	# Check how many times username appears in the DB
-    	cur = db.cursor()
-    	select_if_in = "SELECT COUNT(*) FROM users where login = ?"
-    	results = get_db().cursor().execute(
-            select_if_in, (req['username'],)).fetchone()
+        # Pass entered username to context dic for HTML
+        context['username_in'] = form_in['username']
 
-    	# print('# Username: ', results['COUNT(*)'])
-    	# Check if username count = 1 (Present) or 0 (Not Present)
-    	if results['COUNT(*)'] == 0:
-    		print('Username is not in DB')
-    	else:
-    		print('Username is present')
-    	# username = 'nwchinn'
-	    # response = requests.get("https://api.github.com/users/" + username)
-	    # print("status code: ", response.status_code)
-	    # user_data = response.json()
-	    # print(user_data)
-	    # print('Name: ', user_data['name'])
-	    # print('login: ', user_data['login'])
-	    # print('Followers: ', user_data['followers'])
-	    # print('Following: ', user_data['following'])
-	    # print('Public Repos: ', user_data['public_repos'])
+        # Check how many times username appears in the DB
+        select_if_in = "SELECT COUNT(*) FROM users where login = ?"
+        results = get_db().cursor().execute(
+                select_if_in, (form_in['username'],)).fetchone()
 
+        # Check if username count = 1 (Present) or 0 (Not Present)
+        if results['COUNT(*)'] == 0:
+            print('Username is not in DB')
+            # Grab username data from GitHub API
+            response = requests.get("https://api.github.com/users/" + form_in['username'])
+            print("api status code: ", response.status_code)
+            user_data = response.json()
+            
+            # print(user_data)
+            print('Name: ', user_data['name'])
+            print('login: ', user_data['login'])
+            print('Followers: ', user_data['followers'])
+            print('Following: ', user_data['following'])
+            print('Public Repos: ', user_data['public_repos'])
+            insert_user = '''INSERT INTO users(login, gid, name, email, followers, following, public_repos, public_gists) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
+            get_db().cursor().execute(
+                insert_user, (user_data['login'], user_data['id'], user_data['name'],
+                 user_data['email'], user_data['followers'], user_data['following'], 
+                 user_data['public_repos'], user_data['public_gists'] ))
 
-    cur = db.cursor()
-    cur = cur.execute('''SELECT * FROM users WHERE login= "nwchinn"''').fetchone()
+            context.update(user_data)
+
+        else:
+            print('Username is present')
+            # Grab user data from DB
+            select_user = "SELECT * FROM users where login = ?"
+            results = get_db().cursor().execute(
+            select_user, (form_in['username'],)).fetchone()
+            print(form_in['username'], ' Data(Results): ', results)
+            # Add users information to context dic for HTML
+            context.update(results)
+            
+    
+    print('Context: ', results)
+    # cur = db.cursor()
+    # cur = cur.execute('''SELECT * FROM users WHERE login= "nwchinn"''').fetchone()
     # context = cur.fetchall()
-    print('type: ', type(cur))
+    # print('type: ', type(cur))
     # context['login'] = user_data['login']
-    context['login'] = 'nwchinn'
+    # context['login'] = 'nwchinn'
     return flask.render_template("index.html", **context)
 
-# TO DO:
-# @appname.app.route('/explore/')
-# def show_explore():
-#     """Desplay /explore/ route."""
-#     db = insta485.model.get_db()
-#     cur = db.cursor()
-#     context = {}
-#     print(context)
-#     return flask.render_template("explore.html", **context)
+
+
 
