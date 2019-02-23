@@ -35,12 +35,17 @@ def show_index():
         # Check if username count = 1 (Present) or 0 (Not Present)
         if results['COUNT(*)'] == 0:
             print('Username is not in DB')
+
             # Grab username data from GitHub API
             response = requests.get("https://api.github.com/users/" + form_in['username'])
             print("api status code: ", response.status_code)
             user_data = response.json()
+
+            #TODO: Check that username exists on github
+            if response != 200:
+                print('ERROR: Api failure')
             
-            # print(user_data)
+            print('user_data type: ', type(user_data))
             print('Name: ', user_data['name'])
             print('login: ', user_data['login'])
             print('Followers: ', user_data['followers'])
@@ -61,12 +66,12 @@ def show_index():
             select_user = "SELECT * FROM users where login = ?"
             results = get_db().cursor().execute(
             select_user, (form_in['username'],)).fetchone()
-            print(form_in['username'], ' Data(Results): ', results)
+            # print(form_in['username'], ' Data(Results): ', results)
             # Add users information to context dic for HTML
             context.update(results)
             
     
-    print('Context: ', results)
+    print('Context: ', context)
     # cur = db.cursor()
     # cur = cur.execute('''SELECT * FROM users WHERE login= "nwchinn"''').fetchone()
     # context = cur.fetchall()
