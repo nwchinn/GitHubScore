@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<!-- current user's page username -->
-			<div class="row" style="margin-top: 10px">
+			<div class="row" style="margin-top: 10px;">
 				<div class="col text-center">
 				<h3>Enter your GitHub username</h3>
 				<form action="" method="post" enctype="multipart/form-data" style="">
@@ -55,12 +55,58 @@
 						<input type="submit" name="Enter" value="Submit"/>
 					</form>
 				</form>
-				<h1><a href="/u/{{ login }}/"> {{login}}</a></h1>
+				<!-- <h1><a href="/u/{{ login }}/"> {{login}}</a></h1> -->
+				<div style="width:50%;margin: 20px auto; border: solid;">
 				{% if username_in != Null %}
-				<h2> Username submitted:</h1>
-				<h3>{{username_in}}</h3>
+					<div class="row">
+						<div class="col justify-left" style="padding-top: 10px">
+							<h1> Profile:</h1>
+						</div>
+						<div class="col">
+							<h2><a href="">{{username_in}}</a></h2>
+							<h5>{{name}}</h5>
+						</div>
+					</div>
+					{% if html_url != Null %}
+						<h2> {{login}} has entered the leaderboard</h2>
+					{% endif %}
+					<!-- User Metrics -->
+					<table class="table" style="width:70%; margin:auto">
+						<!-- <thead>
+							<tr>
+								<th scope="col">Username:</th>
+								<th scope="col">{{login}}</th>
+							</tr>
+							<tr>
+								<th scope="col">Name:</th>
+								<th scope="col">{{name}}</th>
+							</tr>
+						</thead> -->
+						<tbody>
+						<tr>
+							<td>Star Count:</td>
+							<td>{{ stars }}</td>
+						</tr>
+						<tr>
+							<td>Public Repos:</td>
+							<td>{{ public_repos }}</td>
+						</tr>
+						<tr>
+							<td>Public Gists:</td>
+							<td>{{ public_gists }}</td>
+						</tr>
+						<tr>
+							<td>Followers Count:</td>
+							<td>{{ followers }}</td>
+						</tr>
+						<tr>
+							<td>Following Count:</td>
+							<td>{{ public_gists }}</td>
+						</tr>
+						</tbody>
+					</table>
 				{% endif %}
-				
+				</div>
 				</div>
 			</div>
 			<!-- "Edit Profile | logout" & Following vs Not Following w/ btns  -->
