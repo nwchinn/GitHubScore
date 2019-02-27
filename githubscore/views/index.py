@@ -9,6 +9,7 @@ import githubscore
 import requests
 
 from githubscore.model import get_db
+from githubscore.views.helper import get_stars
 
 # TO DO:
 @githubscore.app.route('/', methods=['GET', 'POST'])
@@ -46,18 +47,21 @@ def show_index():
             if response.status_code != 200:
                 print('ERROR: Api failure')
             else:
-                print('user_data type: ', type(user_data))
-                print('Name: ', user_data['name'])
-                print('login: ', user_data['login'])
-                print('Followers: ', user_data['followers'])
-                print('Following: ', user_data['following'])
-                print('Public Repos: ', user_data['public_repos'])
-                insert_user = '''INSERT INTO users(login, gid, name, email, followers, following, public_repos, public_gists) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
+                # print('user_data type: ', type(user_data))
+                # print('Name: ', user_data['name'])
+                # print('login: ', user_data['login'])
+                # print('Followers: ', user_data['followers'])
+                # print('Following: ', user_data['following'])
+                # print('Public Repos: ', user_data['public_repos'])
+
+                get_stars()
+
+                insert_user = '''INSERT INTO users(login, gid, name, email, followers, following, public_repos, public_gists, repos_url) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'''
                 get_db().cursor().execute(
                     insert_user, (user_data['login'], user_data['id'], user_data['name'],
                      user_data['email'], user_data['followers'], user_data['following'], 
-                     user_data['public_repos'], user_data['public_gists'] ))
+                     user_data['public_repos'], user_data['public_gists'], user_data['public_repos'] ))
 
             context.update(user_data)
 
@@ -70,6 +74,8 @@ def show_index():
             # print(form_in['username'], ' Data(Results): ', results)
             # Add users information to context dic for HTML
             context.update(results)
+
+            
             
     
     print('Context: ', context)

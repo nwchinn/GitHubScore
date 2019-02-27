@@ -9,6 +9,7 @@ CREATE TABLE users(
   public_gists INTEGER,
   stars INTEGER,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  repos_url VARCHAR(200),
   PRIMARY KEY(login)
 );
 
