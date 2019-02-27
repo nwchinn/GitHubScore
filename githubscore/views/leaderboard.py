@@ -12,7 +12,7 @@ from githubscore.model import get_db
 
 
 # TO DO:
-@githubscore.app.route('/leaderboard')
+@githubscore.app.route('/leaderboard', methods = ["GET"])
 def show_leaderboard():
     """Display / route."""
     # username = 'nwchinn'
@@ -30,9 +30,26 @@ def show_leaderboard():
 
     db = get_db()
     cur = db.cursor()
-    cur = cur.execute('''SELECT * FROM users WHERE login= "nwchinn"''').fetchone()
+    user_repos = cur.execute('''SELECT login, public_repos FROM users''').fetchall()
     # context = cur.fetchall()
-    print('type: ', type(cur))
+    print('data: ', user_repos)
+    context['data'] = []
+
+    for repo in user_repos:
+        print(repo['login'],repo['public_repos'])
+        context['data'].append(repo['public_repos'])
+
+
     # context['login'] = user_data['login']
     context['login'] = 'LEADERBOARD'
+
+    # context['']
     return flask.render_template("leaderboard.html", **context)
+
+
+# @githubscore.app.route("/data")
+#     def data():
+
+
+
+#         return jsonify(get_data())

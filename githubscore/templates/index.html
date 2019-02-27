@@ -18,7 +18,11 @@
 		<!-- Banner/Header -->
 		<div class="row" style="margin-top:15px">
 			<div class="col text-center">
-				<h3> GitHub Leaderboard </h3>
+				<h3>
+				<a href="/leaderboard">
+				 GitHub Leaderboard 
+				</a>
+				</h3>
 			</div>
 			<!-- <div class="col">
                 <div class="row">
@@ -36,7 +40,7 @@
             </div> -->
 		</div>
 		<!-- Line -->
-		<hr style="border-color: black;">
+		<hr style="border-color: black;margin-top: 5px;margin-bottom: 10px">
 
 		<!-- Contains everything below header -->
 		<div class="container-fluid text-center" style="width: 75%;margin-top: 10px">
@@ -56,13 +60,14 @@
 					</form>
 				</form>
 				<!-- <h1><a href="/u/{{ login }}/"> {{login}}</a></h1> -->
-				<div style="width:50%;margin: 20px auto; border: solid;">
+				
 				{% if username_in != Null %}
+				<div style="width:50%;margin: 20px auto; border: solid;">
 					<div class="row">
-						<div class="col justify-left" style="padding-top: 10px">
-							<h1> Profile:</h1>
+						<div class="col" style="padding-top: 10px;">
+							<h1 style="float:right"> Profile:</h1>
 						</div>
-						<div class="col">
+						<div class="col" style="">
 							<h2><a href="">{{username_in}}</a></h2>
 							<h5>{{name}}</h5>
 						</div>
@@ -105,8 +110,8 @@
 						</tr>
 						</tbody>
 					</table>
-				{% endif %}
 				</div>
+				{% endif %}
 				</div>
 			</div>
 			<!-- "Edit Profile | logout" & Following vs Not Following w/ btns  -->
