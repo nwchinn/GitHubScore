@@ -41,9 +41,9 @@ def show_index():
             response = requests.get("https://api.github.com/users/" + form_in['username'])
             print("api status code: ", response.status_code)
             user_data = response.json()
-            print('user_data: ', user_data)
+            # print('user_data: ', user_data)
 
-            #TODO: Check that username exists on github
+            #TODO: Check that username exists on github/not a bad request
             if response.status_code != 200:
                 print('ERROR: Api failure')
             else:
@@ -53,15 +53,17 @@ def show_index():
                 # print('Followers: ', user_data['followers'])
                 # print('Following: ', user_data['following'])
                 # print('Public Repos: ', user_data['public_repos'])
+                print('Repos URL: ', user_data['repos_url'])
 
-                get_stars()
+                stars = get_stars(user_data['repos_url'])
+                context['stars'] = stars
 
-                insert_user = '''INSERT INTO users(login, gid, name, email, followers, following, public_repos, public_gists, repos_url) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+                insert_user = '''INSERT INTO users(login, stars, gid, name, email, followers, following, public_repos, public_gists, repos_url) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
                 get_db().cursor().execute(
-                    insert_user, (user_data['login'], user_data['id'], user_data['name'],
+                    insert_user, (user_data['login'], stars, user_data['id'], user_data['name'],
                      user_data['email'], user_data['followers'], user_data['following'], 
-                     user_data['public_repos'], user_data['public_gists'], user_data['public_repos'] ))
+                     user_data['public_repos'], user_data['public_gists'], user_data['repos_url'] ))
 
             context.update(user_data)
 
@@ -75,10 +77,10 @@ def show_index():
             # Add users information to context dic for HTML
             context.update(results)
 
-            
+
             
     
-    print('Context: ', context)
+    # print('Context: ', context)
     # cur = db.cursor()
     # cur = cur.execute('''SELECT * FROM users WHERE login= "nwchinn"''').fetchone()
     # context = cur.fetchall()
