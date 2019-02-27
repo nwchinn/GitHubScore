@@ -40,9 +40,10 @@ def show_index():
             response = requests.get("https://api.github.com/users/" + form_in['username'])
             print("api status code: ", response.status_code)
             user_data = response.json()
+            print('user_data: ', user_data)
 
             #TODO: Check that username exists on github
-            if response != 200:
+            if response.status_code != 200:
                 print('ERROR: Api failure')
             else:
                 print('user_data type: ', type(user_data))
@@ -58,7 +59,7 @@ def show_index():
                      user_data['email'], user_data['followers'], user_data['following'], 
                      user_data['public_repos'], user_data['public_gists'] ))
 
-                context.update(user_data)
+            context.update(user_data)
 
         else:
             print('Username is present')

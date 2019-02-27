@@ -8,5 +8,21 @@ CREATE TABLE users(
   public_repos INTEGER,
   public_gists INTEGER,
   stars INTEGER,
+  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(login)
 );
+
+CREATE TABLE urls(
+  login PRIMARY KEY,
+  url VARCHAR(200),
+  html_url VARCHAR(200),
+  followers_url VARCHAR(200),
+  following_urlVARCHAR(200),
+  gists_url VARCHAR(200),
+  starred_url VARCHAR(200),
+  subscriptions_url VARCHAR(200),
+  organizations_url VARCHAR(200),
+  repos_url VARCHAR(200),
+  events_url VARCHAR(200),
+  received_events_url VARCHAR(200)
+)
