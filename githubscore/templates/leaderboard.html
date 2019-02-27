@@ -45,6 +45,7 @@
 				<div class="col">
 					<i class="fab fa-github fa-5x"></i>
 					<h3>Here's the Leaderboard</h3>
+					<h4>for # of Public Repos</h4>
 				</div>
 
 			</div>
@@ -65,16 +66,17 @@
 			<script>
 				var data = JSON.parse('{{data}}');
 
-				var hold = '{{data}}';
+				const asc_data = data.sort(function(a, b){return b-a});
+
+				console.log(asc_data)
+				// var hold = '{{data}}';
 
 				// hold = hold.substr(1)
-
-
 				
-				console.log(data)
-				console.log( hold)
+				// console.log(data)
+				// console.log( hold)
 
-				console.log(hold.length)
+				// console.log(hold.length)
 
 				// for(let i = 0; i < hold.legth; i++){
 				// 	// data_list[i] = parseInt(hold[i])
@@ -82,11 +84,11 @@
 				// }
 
 				// console.log("data_list")
-				console.log(JSON.parse(hold))
+				// console.log(JSON.parse(hold))
 
 				d3.select(".chart")
 					.selectAll("div")
-						.data(data)
+						.data(asc_data)
 					.enter().append("div")
 						.style("width", function(d) { return d * 10 + "px"; })
 						.text(function(d) { return d; });
