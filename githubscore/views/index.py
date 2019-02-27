@@ -44,21 +44,21 @@ def show_index():
             #TODO: Check that username exists on github
             if response != 200:
                 print('ERROR: Api failure')
-            
-            print('user_data type: ', type(user_data))
-            print('Name: ', user_data['name'])
-            print('login: ', user_data['login'])
-            print('Followers: ', user_data['followers'])
-            print('Following: ', user_data['following'])
-            print('Public Repos: ', user_data['public_repos'])
-            insert_user = '''INSERT INTO users(login, gid, name, email, followers, following, public_repos, public_gists) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
-            get_db().cursor().execute(
-                insert_user, (user_data['login'], user_data['id'], user_data['name'],
-                 user_data['email'], user_data['followers'], user_data['following'], 
-                 user_data['public_repos'], user_data['public_gists'] ))
+            else:
+                print('user_data type: ', type(user_data))
+                print('Name: ', user_data['name'])
+                print('login: ', user_data['login'])
+                print('Followers: ', user_data['followers'])
+                print('Following: ', user_data['following'])
+                print('Public Repos: ', user_data['public_repos'])
+                insert_user = '''INSERT INTO users(login, gid, name, email, followers, following, public_repos, public_gists) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
+                get_db().cursor().execute(
+                    insert_user, (user_data['login'], user_data['id'], user_data['name'],
+                     user_data['email'], user_data['followers'], user_data['following'], 
+                     user_data['public_repos'], user_data['public_gists'] ))
 
-            context.update(user_data)
+                context.update(user_data)
 
         else:
             print('Username is present')
