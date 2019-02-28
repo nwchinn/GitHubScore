@@ -55,15 +55,25 @@ def show_index():
                 # print('Public Repos: ', user_data['public_repos'])
                 print('Repos URL: ', user_data['repos_url'])
 
+
+                # Insert new user into the DB
+                insert_user = '''INSERT INTO users(login, gid, name, email, followers, following, public_repos, public_gists, repos_url) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+                get_db().cursor().execute(
+                    insert_user, (user_data['login'], user_data['id'], user_data['name'],
+                     user_data['email'], user_data['followers'], user_data['following'], 
+                     user_data['public_repos'], user_data['public_gists'], user_data['repos_url'] ))
+
+                # Get star count and insert user's repos into DB
                 stars = get_stars(user_data['repos_url'])
                 context['stars'] = stars
 
-                insert_user = '''INSERT INTO users(login, stars, gid, name, email, followers, following, public_repos, public_gists, repos_url) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
-                get_db().cursor().execute(
-                    insert_user, (user_data['login'], stars, user_data['id'], user_data['name'],
-                     user_data['email'], user_data['followers'], user_data['following'], 
-                     user_data['public_repos'], user_data['public_gists'], user_data['repos_url'] ))
+                # Update star count for users
+                update_stars = '''UPDATE users SET stars = ? WHERE login = ?'''
+
+                get_db().cursor().execute(update_stars, (stars, user_data['login']))
+
+
 
             context.update(user_data)
 

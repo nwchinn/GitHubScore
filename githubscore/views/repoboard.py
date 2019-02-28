@@ -1,8 +1,8 @@
 """
-Githubscore Leaderboard.
+Githubscore Repo Leaderboard
 
 URLs include:
-/leaderboard
+/repoboard
 """
 import flask
 import githubscore
@@ -12,8 +12,8 @@ from githubscore.model import get_db
 
 
 # TO DO:
-@githubscore.app.route('/leaderboard', methods = ["GET"])
-def show_leaderboard():
+@githubscore.app.route('/repoboard', methods = ["GET"])
+def show_repoboard():
     """Display / route."""
     # username = 'nwchinn'
     # response = requests.get("https://api.github.com/users/" + username)
@@ -31,7 +31,7 @@ def show_leaderboard():
     db = get_db()
     cur = db.cursor()
     user_repos = cur.execute('''SELECT login, public_repos FROM users''').fetchall()
-    # context = cur.fetchall()
+
     print('data: ', user_repos)
     context['data'] = []
 

@@ -24,7 +24,8 @@ CREATE TABLE repos(
   stargazers_count INTEGER,
   watchers_count INTEGER,
   forks_count INTEGER,
-  language VARCHAR(20)
+  language VARCHAR(20),
+  FOREIGN KEY(rlogin) REFERENCES users(login) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE urls(

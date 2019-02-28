@@ -25,6 +25,14 @@ def get_stars(repos_url):
 	else:
 		print('Repos Length', len(repos))
 		for repo in repos:
+			print('REpo Owner: ', repo['owner']['login'])
+			insert_repo = '''INSERT INTO repos(rlogin, name, full_name, url, html_url, size, stargazers_count, watchers_count, forks_count, language) 
+								VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+			get_db().cursor().execute(
+				insert_repo, (repo['owner']['login'], repo['name'], repo['full_name'], repo['url'],
+				repo['html_url'], repo['size'], repo['stargazers_count'], 
+				repo['watchers_count'], repo['forks_count'], repo['language']))
+			
 			print('size:',repo['stargazers_count'])
 			stars += repo['stargazers_count']
 
