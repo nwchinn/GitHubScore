@@ -30,21 +30,21 @@ def show_repoboard():
 
     db = get_db()
     cur = db.cursor()
-    user_repos = cur.execute('''SELECT login, public_repos FROM users''').fetchall()
+    top_repos = cur.execute('''SELECT full_name, stargazers_count, watchers_count, forks_count FROM repos ORDER BY stargazers_count DESC''').fetchall()
 
-    print('data: ', user_repos)
-    context['data'] = []
+    print(top_repos)
+    context['repos'] = top_repos
 
-    for repo in user_repos:
-        print(repo['login'],repo['public_repos'])
-        context['data'].append(repo['public_repos'])
+    # for repo in user_repos:
+    #     print(repo['login'],repo['public_repos'])
+    #     context['data'].append(repo['public_repos'])
 
 
     # context['login'] = user_data['login']
-    context['login'] = 'LEADERBOARD'
+    # context['login'] = 'LEADERBOARD'
 
     # context['']
-    return flask.render_template("leaderboard.html", **context)
+    return flask.render_template("repoboard.html", **context)
 
 
 # @githubscore.app.route("/data")

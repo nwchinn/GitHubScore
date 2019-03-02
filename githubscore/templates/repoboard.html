@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Github Score Leaderboard, made with D3.js">
+    <meta name="author" content="Nick Chinn - Chinndustries">
+
+	<title>GitHub Leaderboard</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<!-- FontAwesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<!-- D3.js & jQuery -->
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <style>
+		.chart div {
+		  font: 10px sans-serif;
+		  background-color: steelblue;
+		  text-align: right;
+		  padding: 3px;
+		  margin: 1px;
+		  color: white;
+		}
+	</style>
+
+</head>
+<body>
+	<div class="container-fluid">
+		<!-- Banner/Header -->
+		<div class="row" style="margin-top:15px">
+			<div class="col text-center">
+				<h3> GitHub Leaderboard </h3>
+			</div>
+		</div>
+		<!-- Line -->
+		<hr style="border-color: black;margin-top: 5px;margin-bottom: 10px">
+
+		<!-- Contains everything below header -->
+		<div class="container-fluid text-center" style="width: 75%;margin-top: 10px">
+			<div class="row text-center">
+				<div class="col">
+					<i class="fab fa-github fa-5x"></i>
+					<h3>Here's the Repo Leaderboard</h3>
+					<h4>Sorted by # of Stars</h4>
+				</div>
+
+			</div>
+			<!-- current user's page username -->
+			<div class="row text-center" style="margin:auto">
+				<div class="col">
+					<!-- <h1> Repo Leaderboard </h1> -->
+					<table class="table" style="width:70%; margin:auto">
+						<thead>
+							<tr>
+								<th scope="col">Repo Name:</th>
+								<th scope="col">Stars</th>
+								<th scope="col">Watchers</th>
+								<th scope="col">Forks</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for repo in repos %}
+						<tr>
+							<td>{{ repo.full_name}}</td>
+							<td>{{ repo.stargazers_count  }}</td>
+							<td>{{ repo.watchers_count }}</td>
+							<td>{{ repo.forks_count }}</td>
+						</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- <div class="" ="chart"></div> -->
+			
+
+			<div class="row text-center" style="margin:auto;margin-top: 50px">
+				<div class="col">
+					<a href="/"><h3>Back to User Lookup</h3></a>
+				</div>
+			</div>
+			<script>
+
+			</script>
+		</div>
+	</div>
+
+
+		
+
+	</script>
+	<!-- Bootstrap core JavaScript [JQuery & Popper.js(bundle)] -->
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
+</body>
+</html>
