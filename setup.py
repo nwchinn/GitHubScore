@@ -13,7 +13,7 @@ setup(
     install_requires=[
         'arrow==0.13.0',
         'bs4==0.0.1',
-        'Flask==1.0.2',
+        'Flask==2.3.2',
         'html5validator==0.3.1',
         'pycodestyle==2.4.0',
         'pydocstyle==3.0.0',
