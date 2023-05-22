@@ -19,7 +19,7 @@ setup(
         'pydocstyle==3.0.0',
         'pylint==2.2.2',
         'pytest==3.8.0',
-        'requests==2.21.0',
+        'requests==2.31.0',
         'sh==1.12.14',
     ],
 )
